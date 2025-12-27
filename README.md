@@ -1,99 +1,127 @@
-DSA:
-=====
-Sorted Increasing order - > [2, 4, 8, 12]  a[I+1] > a[I]
-Sorted decreasing order -> [12, 9, 8, 7, 5]  a[I+1] < a[I]
+# Data Structures and Algorithms
 
-Sorted Non decreasing order -> [1, 2, 3, 3, 3, 4, 4, 5, 8, 9] -> It can have duplicates
-Non decreasing -> duplicates in Increasing order 
-a[i+1] >= a[I]   
+## Sorting Order Definitions
 
-If you find in-place in question then we shouldn’t create a new array instead you have the change the existing array
+### Sorted Increasing Order
+`[2, 4, 8, 12]` where `a[i+1] > a[i]`
 
-Remove Duplicates:
-[0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4,4 ]
+### Sorted Decreasing Order
+`[12, 9, 8, 7, 5]` where `a[i+1] < a[i]`
 
-We can use 2 pointers 
-X 1 -> find out all unique elements by traversing through the array.
-I 2 -> maintain where the elements to be placed
- 
+### Sorted Non-Decreasing Order
+`[1, 2, 3, 3, 3, 4, 4, 5, 8, 9]` - Can have duplicates  
+Non-decreasing means duplicates are allowed in increasing order where `a[i+1] >= a[i]`
+
+> **Note:** If you find "in-place" in a question, you shouldn't create a new array. Instead, you have to change the existing array.
+
+---
+
+## Problem 1: Remove Duplicates from Sorted Array
+
+**Input:** `[0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 4, 4, 4]`
+
+### Approach: Two Pointer Technique
+- **Pointer 1 (x):** Find all unique elements by traversing through the array
+- **Pointer 2 (i):** Maintain where the elements are to be placed
+
+### Solution:
+```javascript
 function removeDuplicates(arr) {
   let x = 0;
-  for (let i = 0; i < arr.length; i++){
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i] > arr[x]) {
       x = x + 1;
       arr[x] = arr[i];
     }
   }
-  return (x+1); //Gives the number of unique elements
+  return (x + 1); // Returns the number of unique elements
 }
-removeDuplicates([1, 2, 2, 3, 4, 4])
 
-Remove Elements:
-Example: 1  [3,2,2,3]
-Val = 3
-Output should be  2, nums=[2,2,..] 
+removeDuplicates([1, 2, 2, 3, 4, 4]);
+```
 
-Example 2: [0,1, 2,2, 3, 0 , 4, 2]
-val=2
-Output should be 5, nums=[0,1,3,0,4, …]
+---
 
-Solution:
-We can use 2 pointer techniques 
+## Problem 2: Remove Elements
 
+### Example 1:
+**Input:** `nums = [3, 2, 2, 3]`, `val = 3`  
+**Output:** `2, nums = [2, 2, ...]`
+
+### Example 2:
+**Input:** `nums = [0, 1, 2, 2, 3, 0, 4, 2]`, `val = 2`  
+**Output:** `5, nums = [0, 1, 3, 0, 4, ...]`
+
+### Approach: Two Pointer Technique
+
+### Solution:
+```javascript
 var removeElement = function(nums, val) {
-    let x=0;
-    for(let i=0; i<nums.length; i++) {
-        if(nums[i] != val){
-            nums[x] = nums[i]
-            x=x+1
+    let x = 0;
+    for (let i = 0; i < nums.length; i++) {
+        if (nums[i] != val) {
+            nums[x] = nums[i];
+            x = x + 1;
         }
     }
     return x;
 };
+```
 
-Reverse string:
-Example: [I, n, d, u, m, a, t, h, i]
-O/p: [I,h,t,a,m,u,d,n,i]
+---
 
-Formula: swap(0, n-1), swap(1, n-2) …swap(I, n-1-i)
+## Problem 3: Reverse String
 
+### Example:
+**Input:** `['I', 'n', 'd', 'u', 'm', 'a', 't', 'h', 'i']`  
+**Output:** `['i', 'h', 't', 'a', 'm', 'u', 'd', 'n', 'I']`
+
+### Formula:
+Swap elements: `swap(0, n-1)`, `swap(1, n-2)`, ..., `swap(i, n-1-i)`
+
+### Solution:
+```javascript
 var reverseString = function(s) {
     const lengthOfS = s.length;
-    const halfOfS = Math.floor(lengthOfS/2);
-    for(let i=0; i<halfOfS; i++) {
-        const temp = s[i]
-        s[i] = s[lengthOfS-1-i]
-        s[lengthOfS-1-i] = temp;
+    const halfOfS = Math.floor(lengthOfS / 2);
+    for (let i = 0; i < halfOfS; i++) {
+        const temp = s[i];
+        s[i] = s[lengthOfS - 1 - i];
+        s[lengthOfS - 1 - i] = temp;
     }
 };
+```
 
+---
 
-Best Time to Buy and sell stocks:
-Brute force approach: We will try to find out all the possible ways of buy and sell and then we check what is the max profit that we can get. But its a bad way of solving the problem and it gives o(n^2) - Time complexity
-               0  1  2  3  4  5
-prices = [7, 1, 5, 3, 6, 4]
+## Problem 4: Best Time to Buy and Sell Stock
 
-prices[i] is the price of a given stock on the ith day.
+**Problem:** `prices[i]` is the price of a given stock on the `i-th` day.
 
-We need o iterate 2 times so o(n^2) - Time complexity
+**Example:** `prices = [7, 1, 5, 3, 6, 4]`  
+**Indices:** `[0, 1, 2, 3, 4, 5]`
 
-Better solution:
+### Brute Force Approach:
+Try to find all possible ways to buy and sell, then check the maximum profit. However, this is inefficient with a time complexity of **O(n²)**.
+
+### Optimal Solution:
+Track the minimum price seen so far and calculate the maximum profit possible.
+
+**Time Complexity:** O(n)
+
+```javascript
 var maxProfit = function(prices) {
     let min = prices[0];
     let max = 0;
-    for(let i=1; i<prices.length; i++) {
-        if(prices[i] < min){
+    for (let i = 1; i < prices.length; i++) {
+        if (prices[i] < min) {
             min = prices[i];
         }
-        const temp = prices[i] - min
-        if(temp > max) {
+        const temp = prices[i] - min;
+        if (temp > max) {
             max = temp;
         }
     }
-    return max
+    return max;
 };
-
-
-
-
-
+```
