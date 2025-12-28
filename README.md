@@ -211,3 +211,34 @@ var merge = function (nums1, m, nums2, n) {
   }
 };
 ```
+
+## Problem 6: Move Zeroes
+
+**Problem:** Move all zeros in the array to the end while maintaining the relative order of non-zero elements. Do this in-place without creating a new array.
+
+**Example:**  
+**Input:** `nums = [0, 1, 0, 3, 12]`  
+**Output:** `nums = [1, 3, 12, 0, 0]`
+
+### Optimal Solution (Two Pointers):
+
+Use one pointer `x` to track the position to place the next non-zero element, and a scanning pointer `i` to iterate through the array. After the pass, fill the remaining positions with zeros.
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(1)
+
+```javascript
+var moveZeroes = function (nums) {
+  let x = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      nums[x] = nums[i];
+      x++;
+    }
+  }
+
+  for (let i = x; i < nums.length; i++) {
+    nums[i] = 0;
+  }
+};
+```
