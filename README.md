@@ -242,3 +242,110 @@ var moveZeroes = function (nums) {
   }
 };
 ```
+
+## Problem 7: Max Consecutive Ones
+
+**Problem:** Given a binary array `nums`, return the maximum number of consecutive `1`s.
+
+**Time Complexity:** O(n)  
+ **Space Complexity:** O(1)
+
+```javascript
+var findMaxConsecutiveOnes = function (nums) {
+  let current = 0;
+  let max = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === 1) {
+      current++;
+      continue;
+    }
+    max = Math.max(current, max);
+    current = 0;
+  }
+
+  return Math.max(max, current);
+};
+```
+
+---
+
+## Problem 8: Missing Number
+
+**Problem:** Given an array `nums` containing `n` distinct numbers in the range `[0, n]`, return the single number that is missing.
+
+**Example:**  
+ **Input:** `nums = [3, 0, 1]`  
+ **Output:** `2`
+
+### Approach: Sum Formula
+
+The sum of the numbers from `0` to `n` is $\frac{n(n+1)}{2}$. Subtract the observed sum from this total to find the missing value.
+
+**Time Complexity:** O(n)  
+ **Space Complexity:** O(1)
+
+```javascript
+var missingNumber = function (nums) {
+  const n = nums.length;
+  const totalSum = (n * (n + 1)) / 2;
+
+  let partialSum = 0;
+  for (let i = 0; i < n; i++) {
+    partialSum += nums[i];
+  }
+
+  return totalSum - partialSum;
+};
+```
+
+---
+
+## Problem 9: Single Number
+
+**Problem:** In a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+**Example:**  
+ **Input:** `nums = [2, 2, 1]`  
+ **Output:** `1`
+
+### Solution 1: Hash Map
+
+Count occurrences, then return the key with a count of `1`.
+
+**Time Complexity:** O(n)  
+ **Space Complexity:** O(n)
+
+```javascript
+var singleNumber = function (nums) {
+  const counts = {};
+
+  for (let i = 0; i < nums.length; i++) {
+    const value = nums[i];
+    counts[value] = (counts[value] || 0) + 1;
+  }
+
+  for (let i = 0; i < nums.length; i++) {
+    if (counts[nums[i]] === 1) {
+      return nums[i];
+    }
+  }
+};
+```
+
+### Solution 2: Bitwise XOR
+
+Using the properties `A ^ 0 = A` and `A ^ A = 0`, XORing all values leaves the unique number.
+
+**Time Complexity:** O(n)  
+ **Space Complexity:** O(1)
+
+```javascript
+var singleNumber = function (nums) {
+  let xor = 0;
+  for (let i = 0; i < nums.length; i++) {
+    xor ^= nums[i];
+  }
+  return xor;
+};
+```
