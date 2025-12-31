@@ -110,3 +110,101 @@ function sumArray(n) {
 
 console.log(sumArray(arr.length - 1)); // Output: 15
 ```
+
+---
+
+## Sum of All Odd Numbers in an Array
+
+```javascript
+const arr = [1, 2, 3, 4, 5];
+
+function sumOdd(n) {
+  const isOdd = arr[n] % 2 !== 0;
+  if (n === 0) {
+    return isOdd ? arr[n] : 0;
+  }
+  return (isOdd ? arr[n] : 0) + sumOdd(n - 1);
+}
+
+console.log(sumOdd(arr.length - 1)); // Output: 9
+```
+
+---
+
+## Factorial Using Recursion
+
+```javascript
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+
+console.log(factorial(5)); // Output: 120
+```
+
+---
+
+## Power of Two (Recursive Check)
+
+An integer `n` is a power of two if there exists an integer `x` such that `n === 2^x`.
+
+Rules:
+
+1. Repeatedly dividing by 2 should end at 1 if it is a power of two.
+2. Any odd number (other than 1) cannot be a power of two.
+3. If division by 2 ever drops below 1, it's not a power of two.
+
+```javascript
+var isPowerOfTwo = function (n) {
+  if (n === 1) return true;
+  if (n < 1 || n % 2 !== 0) return false;
+  return isPowerOfTwo(n / 2);
+};
+
+console.log(isPowerOfTwo(1)); // true (2^0)
+console.log(isPowerOfTwo(16)); // true (2^4)
+console.log(isPowerOfTwo(6)); // false
+```
+
+---
+
+## Fibonacci Series
+
+**Series:** `[0, 1, 1, 2, 3, 5, 8, 13, 21, ...]`
+
+**Formula:** $f(n) = f(n-1) + f(n-2)$
+
+### Recursive Approach
+
+```javascript
+var fib = function (n) {
+  if (n <= 1) return n;
+  return fib(n - 1) + fib(n - 2);
+};
+
+console.log(fib(5)); // Output: 5
+```
+
+The recursion works backward until it hits the base case, then returns and performs addition.
+
+**Time Complexity:** O(2^n) - Exponential (inefficient)  
+**Space Complexity:** O(n) - Call stack depth
+
+#### Example Breakdown:
+
+```
+fib(5) = fib(4) + fib(3)
+fib(4) = fib(3) + fib(2)
+fib(3) = fib(2) + fib(1)
+fib(2) = fib(1) + fib(0) = 1
+fib(1) = 1
+fib(0) = 0
+```
+
+> **Note:** This can be optimized using Dynamic Programming to reduce time complexity to O(n).
+
+### Real-World Example: Rabbit Problem
+
+**Problem:** 2 rabbits multiply by 2 every month. How many rabbits will there be after n months?
+
+This follows the Fibonacci sequence where each pair produces a new pair, and the population grows exponentially following the Fibonacci pattern.
