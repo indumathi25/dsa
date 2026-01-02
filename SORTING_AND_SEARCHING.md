@@ -147,3 +147,42 @@ console.log(bubbleSortOptimized(arr2)); // Output: [0, 1, 4, 5, 9]
 
 **Time Complexity:** Worst/average O(n^2); Best case O(n) when already sorted (early exit)  
 **Space Complexity:** O(1)
+
+---
+
+## Selection Sort
+
+Selection sort divides the array into a sorted and unsorted region. It repeatedly finds the minimum element from the unsorted region and moves it to the end of the sorted region.
+
+### Algorithm:
+
+1. Start with the first position
+2. Find the minimum element in the remaining unsorted portion
+3. Swap it with the current position
+4. Move to the next position and repeat
+
+```javascript
+let arr = [5, 4, 9, 1, 0];
+
+function selectionSort(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let min = i;
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[min]) {
+        min = j;
+      }
+    }
+    if (min !== i) {
+      const temp = arr[i];
+      arr[i] = arr[min];
+      arr[min] = temp;
+    }
+  }
+  return arr;
+}
+
+console.log(selectionSort(arr)); // Output: [0, 1, 4, 5, 9]
+```
+
+**Time Complexity:** O(n^2) - Always makes n(n-1)/2 comparisons  
+**Space Complexity:** O(1)
