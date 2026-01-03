@@ -186,3 +186,50 @@ console.log(selectionSort(arr)); // Output: [0, 1, 4, 5, 9]
 
 **Time Complexity:** O(n^2) - Always makes n(n-1)/2 comparisons  
 **Space Complexity:** O(1)
+
+---
+
+## Insertion Sort
+
+Insertion sort builds a sorted portion by placing each new element into its correct position relative to the already sorted elements.
+
+### Walkthrough
+
+- Start with the second element as the current item to insert
+- Compare the current element with items to its left and shift larger elements to the right
+- Insert the current element into the first position that is smaller (or at the start)
+
+Example trace with swaps:
+
+```
+Start: [7, 4, 3, 5, 1, 2]
+Take 7 (current), compare against [4, 3, 5, 1, 2]
+Take 4, compare 7 with 4 → swap → [4, 7, 3, 5, 1, 2]
+Take 3, compare with 7 → swap, compare with 4 → swap → [3, 4, 7, 5, 1, 2]
+Take 5, compare with 7 → swap → [3, 4, 5, 7, 1, 2]
+Take 1, compare backwards and insert
+```
+
+```javascript
+let arr = [5, 4, 9, 1, 0];
+
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let current = arr[i];
+    let prev = i - 1;
+
+    while (prev >= 0 && arr[prev] > current) {
+      arr[prev + 1] = arr[prev];
+      prev--;
+    }
+
+    arr[prev + 1] = current;
+  }
+  return arr;
+}
+
+console.log(insertionSort(arr));
+```
+
+**Time Complexity:** O(n^2) - quadratic comparisons/shifts in the average and worst case  
+**Space Complexity:** O(1) - in-place
