@@ -233,3 +233,74 @@ console.log(insertionSort(arr));
 
 **Time Complexity:** O(n^2) - quadratic comparisons/shifts in the average and worst case  
 **Space Complexity:** O(1) - in-place
+
+---
+
+## Merge Sort (Divide & Conquer Algorithm)
+
+Merge sort is a recursive algorithm that divides the array into smaller subarrays, sorts them, and then merges them back together in sorted order.
+
+### How It Works
+
+**Divide Phase:** Split the array recursively until each subarray has one element
+
+**Conquer Phase:** Merge subarrays back together in sorted fashion
+
+### Visual Example
+
+```
+Array: [8, 4, 5, 6, 9, 1, 3, 6]
+
+Divide Phase:
+         [8, 4, 5, 6]    [9, 1, 3, 6]
+       [8, 4]   [5, 6]   [9, 1]  [3, 6]
+    [8]  [4]  [5] [6]  [9] [1]  [3] [6]
+
+Conquer Phase (merge in sorted fashion):
+  [8]  [4]  [5] [6]  [9] [1]  [3] [6]
+ [4, 8]     [5, 6]    [1, 9]    [3, 6]
+   [4, 5, 6, 8]         [1, 3, 6, 9]
+     [1, 3, 4, 5, 6, 6, 8, 9]
+```
+
+### Example: Merge Two Sorted Arrays
+
+```javascript
+let left = [1, 3, 5, 7];
+let right = [2, 4, 6, 8];
+
+function merge(left, right) {
+  let result = [];
+  let i = 0,
+    j = 0;
+
+  while (i < left.length && j < right.length) {
+    if (left[i] < right[j]) {
+      result.push(left[i++]);
+    } else {
+      result.push(right[j++]);
+    }
+  }
+
+  return [...result, ...left.slice(i), ...right.slice(j)];
+}
+
+console.log(merge(left, right)); // Output: [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+### Implementation: Merge Sort
+
+```javascript
+var sortArray = function (nums) {
+  if (nums.length <= 1) return nums;
+
+  const middle = Math.floor(nums.length / 2);
+  const left = sortArray(nums.slice(0, middle));
+  const right = sortArray(nums.slice(middle));
+
+  return merge(left, right);
+};
+```
+
+**Time Complexity:** O(n log n) - Efficient and good for large datasets  
+**Space Complexity:** O(n) - Requires additional space for merging
