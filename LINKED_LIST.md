@@ -256,6 +256,30 @@ MyLinkedList.prototype.deleteAtIndex = function (index) {
  */
 ```
 
+---
+
+## Middle of the Linked List
+
+Slow and fast pointer approach: the slow pointer moves 1 step while the fast pointer moves 2. When the fast pointer reaches `null`, the slow pointer points to the middle node.
+
+- fast = 2x
+- slow = x
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(1)
+
+```javascript
+var middleNode = function (head) {
+  let slow = head;
+  let fast = head;
+  while (fast && fast.next) {
+    slow = slow?.next;
+    fast = fast?.next?.next;
+  }
+  return slow;
+};
+```
+
 ```
 
 ```
