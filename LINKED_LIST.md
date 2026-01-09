@@ -280,6 +280,83 @@ var middleNode = function (head) {
 };
 ```
 
+---
+
+## Reverse the Linked List
+
+We can change the pointer to point in a different order by making `current.next = prev`. We need to maintain the previous element as we traverse until current reaches `null`.
+
+**Original:**  
+`Head -> 1 -> 2 -> 3 -> 4 -> 5 -> null`
+
+**Reversed:**  
+`null <- 1 <- 2 <- 3 <- 4 <- 5 <- Head`
+
+```javascript
+var reverseList = function (head) {
+  let prev = null;
+  let current = head;
+
+  while (current) {
+    let temp = current.next;
+    current.next = prev;
+    prev = current;
+    current = temp;
+  }
+  head = prev;
+  return head;
+};
 ```
 
+---
+
+## Linked List Cycle
+
+### Approach 1: Using HashTable (Set)
+
+Use a Set for fast retrieval. If we see the same node again, there's a cycle.
+
+- `set.has(a)` - check if node exists
+- `set.add(a)` - add node to set
+
+Finding an element in a Set has O(1) average time complexity (vs O(n) for arrays).
+
+```javascript
+var hasCycle = function (head) {
+  let current = head;
+  let setNode = new Set();
+  while (current) {
+    if (setNode.has(current)) {
+      return true;
+    }
+    setNode.add(current);
+    current = current.next;
+  }
+  return false;
+};
+```
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+### Approach 2: Floyd's Algorithm (Slow and Fast Pointers)
+
+If a fast runner and a slow runner are both in circular motion with different speeds, they will eventually meet at the same point.
+
+- **Slow:** moves 1 step
+- **Fast:** moves 2 steps
+
+If there is a cycle, the slow pointer will eventually equal the fast pointer.
+
+```javascript
+var hasCycle = function (head) {
+  let slow = head;
+  let fast = head?.next;
+  while (fast) {
+    slow = slow?.next;
+    fast = fast?.next?.next;
+    if (slow == fast) return true;
+  }
+  return false;
+};
 ```
