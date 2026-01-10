@@ -360,3 +360,86 @@ var hasCycle = function (head) {
   return false;
 };
 ```
+
+---
+
+## Palindrome Linked List
+
+Check if a linked list is a palindrome by comparing values from start and end.
+
+### Approach 1: Convert to Array
+
+Convert the linked list to an array and check if it reads the same forward and backward.
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(n)
+
+```javascript
+var isPalindrome = function (head) {
+  if (!head || !head.next) return true;
+
+  let arrayVal = [];
+  let current = head;
+  while (current) {
+    arrayVal.push(current.val);
+    current = current.next;
+  }
+
+  let start = 0;
+  let end = arrayVal.length - 1;
+  while (start < end) {
+    if (arrayVal[start] !== arrayVal[end]) {
+      return false;
+    }
+    start++;
+    end--;
+  }
+  return true;
+};
+```
+
+### Approach 2: Find Middle, Reverse, and Compare
+
+1. Find the middle element using slow and fast pointers
+2. Reverse the second half
+3. Compare nodes from start and end
+
+**Time Complexity:** O(n)  
+**Space Complexity:** O(1)
+
+```javascript
+var isPalindrome = function (head) {
+  if (!head || !head.next) return true;
+
+  // Find the middle element
+  let slow = head;
+  let fast = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+
+  // Reverse the second half
+  let prev = null;
+  let current = slow;
+  while (current) {
+    let temp = current.next;
+    current.next = prev;
+    prev = current;
+    current = temp;
+  }
+
+  // Check for palindrome
+  let firstNode = head;
+  let secondNode = prev;
+  while (secondNode) {
+    if (firstNode.val != secondNode.val) {
+      return false;
+    }
+    firstNode = firstNode.next;
+    secondNode = secondNode.next;
+  }
+
+  return true;
+};
+```
