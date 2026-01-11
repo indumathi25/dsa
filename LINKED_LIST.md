@@ -443,3 +443,53 @@ var isPalindrome = function (head) {
   return true;
 };
 ```
+
+---
+
+## Intersection of Two Linked Lists
+
+Find the node at which two singly linked lists intersect. If they don't intersect, return `null`.
+
+Reference: [LeetCode Problem](https://leetcode.com/problems/intersection-of-two-linked-lists/description/)
+
+### Brute Force Approach
+
+Take one element from `headA` and check if it exists in `headB`. Continue until a match is found.
+
+- `headA` size: M
+- `headB` size: N
+
+**Time Complexity:** O(M × N)  
+**Space Complexity:** O(1)
+
+### Best Approach: Using HashMap/Set
+
+1. Put all nodes from `headB` into a Set
+2. Loop through each node in `headA` and check if it exists in the Set
+3. Searching in a Set is O(1) vs O(n) for linked list traversal
+
+**Time Complexity:** O(M + N)  
+**Space Complexity:** O(N)
+
+```javascript
+var getIntersectionNode = function (headA, headB) {
+  let setVal = new Set();
+
+  // Put all nodes of headB into Set
+  let current = headB;
+  while (headB) {
+    setVal.add(headB);
+    headB = headB.next;
+  }
+
+  // Check each node of headA with Set
+  while (headA) {
+    if (setVal.has(headA)) {
+      return headA;
+    }
+    headA = headA.next;
+  }
+
+  return null;
+};
+```
