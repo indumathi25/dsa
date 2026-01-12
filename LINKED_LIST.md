@@ -493,3 +493,59 @@ var getIntersectionNode = function (headA, headB) {
   return null;
 };
 ```
+
+---
+
+## Remove Linked List Elements
+
+Given the head of a linked list and an integer `val`, remove all nodes where `Node.val == val` and return the new head.
+
+### Challenge
+
+Removing elements is straightforward in the middle using `prev.next = prev.next.next`, but this approach fails when the head node itself needs to be removed.
+
+### Solution: Sentinel Node
+
+A **sentinel node** (guard node) is placed at the front of the list to act as a watch point. This allows us to handle head removal uniformly with other nodes.
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @param {number} val
+ * @return {ListNode}
+ */
+var removeElements = function (head, val) {
+  // Create a sentinel node pointing to the head
+  let sentinelNode = new ListNode();
+  sentinelNode.next = head;
+
+  let prev = sentinelNode;
+  while (prev) {
+    if (prev?.next?.val == val) {
+      // Skip the node with matching value
+      prev.next = prev.next.next;
+    } else {
+      // Move to the next node
+      prev = prev.next;
+    }
+  }
+
+  // Return the actual head (skipping the sentinel)
+  return sentinelNode.next;
+};
+```
+
+**How it works:**
+
+1. Create a sentinel node and point it to the original head
+2. Use `prev` starting from the sentinel node
+3. When a node to remove is found, skip it with `prev.next = prev.next.next`
+4. Return `sentinelNode.next` as the new head
