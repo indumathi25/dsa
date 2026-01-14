@@ -549,3 +549,43 @@ var removeElements = function (head, val) {
 2. Use `prev` starting from the sentinel node
 3. When a node to remove is found, skip it with `prev.next = prev.next.next`
 4. Return `sentinelNode.next` as the new head
+
+---
+
+## Remove Nth Node From End of List
+
+1 -> 2 -> 3 -> 4 -> 5 -> null, if n=2 we need to deleted 2nd from the last which is 4
+
+Whenever you are seeing any deletion problem in linked list, make sure to sure sentinel node.
+Add sentinelNode to head and it will be easy to delete the head.
+How to calculate which position to delete? We know only the head and don't know the length of the linked list.
+
+### Solution 1: Traversing the list 2 times - 2Pass
+
+First find the length of the list and then find the position to delete:
+
+- deletePos = (length - n) + 1
+- When deleting the element we need prevPos = (length - n)
+
+```javascript
+var removeNthFromEnd = function (head, n) {
+  let sentinel = new ListNode();
+  sentinel.next = head;
+  let length = 0;
+  while (head) {
+    head = head.next;
+    length++;
+  }
+  let prevPos = length - n;
+  let prev = sentinel;
+
+  for (let i = 0; i < prevPos; i++) {
+    prev = prev.next;
+  }
+  prev.next = prev.next.next;
+  return sentinel.next;
+};
+```
+
+Time Complexity: O(n);
+Space Complexity: O(1)
