@@ -589,3 +589,37 @@ var removeNthFromEnd = function (head, n) {
 
 Time Complexity: O(n);
 Space Complexity: O(1)
+
+---
+
+### Solution 2: One Pass
+
+Use 2 pointer -> 1st and 2nd pointer -> both move 1 step at a time but 2nd pointer starts from n
+
+- 1st pointer: starts from sentinel node
+- 2nd pointer: starts from n and both move one step at a time
+
+While 2nd pointer moves to end, then 1st pointer points to the node that is previous to the node that we need to delete.
+Now 1st pointer = prev
+
+```javascript
+var removeNthFromEnd = function (head, n) {
+  let sentinel = new ListNode();
+  sentinel.next = head;
+  let firstPointer = sentinel;
+  let secondPointer = head;
+  for (let i = 0; i < n; i++) {
+    secondPointer = secondPointer.next;
+  }
+
+  while (secondPointer) {
+    firstPointer = firstPointer.next;
+    secondPointer = secondPointer.next;
+  }
+  firstPointer.next = firstPointer.next.next;
+  return sentinel.next;
+};
+```
+
+Time Complexity: O(n)
+Space Complexity: O(1)
