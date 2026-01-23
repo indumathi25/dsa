@@ -623,3 +623,67 @@ var removeNthFromEnd = function (head, n) {
 
 Time Complexity: O(n)
 Space Complexity: O(1)
+
+---
+
+## Odd Even Linked List
+
+Input: head = [1,2,3,4,5]
+Output: [1,3,5,2,4]
+
+We must solve the problem in O(1) extra space complexity and O(n) time complexity.
+
+Take 2 pointer odd and even pointer:
+odd.next = odd.next.next;
+even.next = even.next.next;
+
+**Solution:**
+
+```javascript
+var oddEvenList = function (head) {
+  if (!head) return head;
+  let odd = head;
+  let even = head?.next;
+  let evenStart = even;
+
+  while (odd?.next && even?.next) {
+    odd.next = odd.next.next;
+    even.next = even.next.next;
+    odd = odd.next;
+    even = even.next;
+  }
+
+  odd.next = evenStart;
+  return head;
+};
+```
+
+---
+
+## Add Two Numbers
+
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+```javascript
+var addTwoNumbers = function (l1, l2) {
+  let answer = new ListNode();
+  let answerHead = answer;
+  let carry = 0;
+  while (l1 || l2 || carry !== 0) {
+    let sum = (!l1 ? 0 : l1.val) + (!l2 ? 0 : l2.val) + carry;
+    carry = Math.floor(sum / 10);
+    let digit = sum % 10;
+    let newNode = new ListNode(digit);
+    answer.next = newNode;
+    //
+    answer = answer.next;
+    l1 = l1?.next;
+    l2 = l2?.next;
+  }
+  return answerHead.next;
+};
+```
+
+**Approach:** first calculate sum, then calculate carry, digit.
+Create a dummy node to track the head and attach it to that node.
