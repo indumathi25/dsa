@@ -687,3 +687,62 @@ var addTwoNumbers = function (l1, l2) {
 
 **Approach:** first calculate sum, then calculate carry, digit.
 Create a dummy node to track the head and attach it to that node.
+
+---
+
+## Rotate List
+
+Given the head of a linked list, rotate the list to the right by k places
+
+Example:
+1->2->3->4->5
+
+If k=1: 5->1->2->3->4
+If k=2: 4->5->1->2->3
+If k=100: list has to be rotated 100 times
+If k = list.length then rotated list === original list
+If k=5 then rotated list = 5->1->2->3->4
+If k=10 then again rotated list = 5->1->2->3->4
+
+If k=102, length=5 then k=k%length
+Then k=2 we can rotate only for 2 times
+
+**Solution:**
+
+```javascript
+var rotateRight = function (head, k) {
+  if (!head || !head.next) return head;
+  let firstPointer = head;
+  let secondPointer = head;
+  let n = 0;
+  let current = head;
+  while (current) {
+    n++;
+    current = current.next;
+  }
+  k = k % n;
+  for (let i = 0; i < k; i++) {
+    secondPointer = secondPointer.next;
+  }
+
+  while (secondPointer.next) {
+    firstPointer = firstPointer.next;
+    secondPointer = secondPointer.next;
+  }
+
+  secondPointer.next = head;
+  const newHead = firstPointer.next;
+  firstPointer.next = null;
+  return newHead;
+};
+```
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+
+Variables in JavaScript don’t store objects — they store REFERENCES to objects.
+0xA → { val:1, next: 0xB }
+0xB → { val:2, next: 0xC }
+0xC → { val:3, next: 0xD }
+0xD → { val:4, next: 0xE }
+0xE → { val:5, next: null }
